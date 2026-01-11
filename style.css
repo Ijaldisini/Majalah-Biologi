@@ -1,4 +1,3 @@
-/* --- CONFIGURATION & VARIABLES --- */
 :root {
   --primary: #0f3d24; /* Deep Forest Green */
   --secondary: #1a4d2e; /* Emerald */
@@ -17,7 +16,7 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Sangat penting untuk mencegah overflow */
+  box-sizing: border-box;
   outline: none;
 }
 
@@ -25,7 +24,7 @@ html,
 body {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden; /* Mencegah scroll horizontal di level root */
+  overflow-x: hidden;
 }
 
 body {
@@ -100,7 +99,7 @@ header.hero {
   color: white;
   padding: 120px 20px 80px;
   width: 100%;
-  overflow: hidden; /* KUNCI PERBAIKAN: Memotong background yang di-zoom */
+  overflow: hidden;
 }
 
 .hero-bg {
@@ -116,12 +115,12 @@ header.hero {
   background-attachment: fixed;
   z-index: -1;
   filter: brightness(0.85);
-  transform: scale(1.1); /* Zoom effect ini yang sebelumnya bikin lebar */
+  transform: scale(1.1);
 }
 
 .hero-content {
   max-width: 900px;
-  width: 100%; /* Pastikan konten tidak melebar */
+  width: 100%;
   animation: fadeInUp 1.2s ease-out;
   position: relative;
   z-index: 1;
@@ -133,7 +132,7 @@ h1 {
   line-height: 1.1;
   margin-bottom: 20px;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  word-wrap: break-word; /* Mencegah teks panjang menabrak layar */
+  word-wrap: break-word;
 }
 
 .hero-subtitle {
@@ -188,8 +187,8 @@ h1 {
   max-width: 1000px;
   margin: 0 auto;
   padding: 80px 20px;
-  width: 100%; /* Pastikan kontainer patuh pada layar */
-  overflow: hidden; /* Mencegah anak elemen bocor */
+  width: 100%;
+  overflow: hidden;
 }
 
 .article-body p {
@@ -514,9 +513,7 @@ footer {
   }
 }
 
-/* =========================================
-   RESPONSIVE & MOBILE OPTIMIZATION
-   ========================================= */
+/* RESPONSIVE & MOBILE OPTIMIZATION */
 
 @media (max-width: 992px) {
   h1 {
@@ -531,7 +528,6 @@ footer {
 }
 
 @media (max-width: 768px) {
-  /* Fix Parallax iOS */
   .hero-bg {
     background-attachment: scroll;
     background-position: center top;

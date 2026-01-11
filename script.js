@@ -1,4 +1,4 @@
-// 1. Scroll Progress Bar & Navbar Effect
+// Scroll Progress Bar & Navbar Effect
 window.onscroll = function () {
   scrollLogic();
 };
@@ -11,7 +11,6 @@ function scrollLogic() {
   var scrolled = (winScroll / height) * 100;
   document.getElementById("myBar").style.width = scrolled + "%";
 
-  // Navbar transparent to solid logic
   var navbar = document.getElementById("navbar");
   if (winScroll > 50) {
     navbar.style.boxShadow = "0 2px 20px rgba(0,0,0,0.1)";
@@ -20,7 +19,7 @@ function scrollLogic() {
   }
 }
 
-// 2. Scroll Reveal Animation (Intersection Observer)
+// Scroll Reveal Animation (Intersection Observer)
 const revealElements = document.querySelectorAll(".reveal");
 
 const revealObserver = new IntersectionObserver(
@@ -28,13 +27,13 @@ const revealObserver = new IntersectionObserver(
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("active");
-        observer.unobserve(entry.target); // Only animate once
+        observer.unobserve(entry.target);
       }
     });
   },
   {
     root: null,
-    threshold: 0.1, // Trigger when 10% visible
+    threshold: 0.1,
     rootMargin: "0px",
   }
 );
