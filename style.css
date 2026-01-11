@@ -6,8 +6,6 @@
   --bg-body: #fdfbf7; /* Warm Paper */
   --text-main: #2c2c2c;
   --text-muted: #666;
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.3);
   --shadow-soft: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
 
   --font-display: "Cinzel", serif;
@@ -19,8 +17,15 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
+  box-sizing: border-box; /* Sangat penting untuk mencegah overflow */
+  outline: none;
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* Mencegah scroll horizontal di level root */
 }
 
 body {
@@ -28,7 +33,7 @@ body {
   color: var(--text-main);
   font-family: var(--font-sans);
   line-height: 1.8;
-  overflow-x: hidden;
+  position: relative;
 }
 
 /* --- SCROLL PROGRESS BAR --- */
@@ -47,7 +52,7 @@ body {
   transition: width 0.1s;
 }
 
-/* --- NAVIGATION (GLASSMORPHISM) --- */
+/* --- NAVIGATION --- */
 nav {
   display: flex;
   justify-content: space-between;
@@ -55,6 +60,7 @@ nav {
   padding: 15px 5%;
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   z-index: 1000;
   background: rgba(253, 251, 247, 0.85);
@@ -66,7 +72,7 @@ nav {
 
 .brand {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--primary);
   letter-spacing: 2px;
@@ -76,23 +82,25 @@ nav {
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
   color: var(--accent);
   border: 1px solid var(--accent);
   padding: 5px 15px;
   border-radius: 50px;
 }
 
-/* --- HERO SECTION (PARALLAX) --- */
+/* --- HERO SECTION --- */
 header.hero {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  overflow: hidden;
   color: white;
+  padding: 120px 20px 80px;
+  width: 100%;
+  overflow: hidden; /* KUNCI PERBAIKAN: Memotong background yang di-zoom */
 }
 
 .hero-bg {
@@ -105,25 +113,27 @@ header.hero {
     url("Assets/bg.jpg");
   background-size: cover;
   background-position: center;
-  background-attachment: fixed; /* Efek Parallax */
+  background-attachment: fixed;
   z-index: -1;
   filter: brightness(0.85);
-  transform: scale(1.1);
+  transform: scale(1.1); /* Zoom effect ini yang sebelumnya bikin lebar */
 }
 
 .hero-content {
   max-width: 900px;
-  padding: 0 20px;
+  width: 100%; /* Pastikan konten tidak melebar */
   animation: fadeInUp 1.2s ease-out;
-  margin-top: 60px; /* Offset for navbar */
+  position: relative;
+  z-index: 1;
 }
 
 h1 {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 5vw, 4rem); /* Responsif Font Size */
+  font-size: clamp(2rem, 5vw, 4rem);
   line-height: 1.1;
   margin-bottom: 20px;
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  word-wrap: break-word; /* Mencegah teks panjang menabrak layar */
 }
 
 .hero-subtitle {
@@ -135,7 +145,6 @@ h1 {
   line-height: 1.6;
 }
 
-/* Credits di Hero */
 .hero-credits {
   display: flex;
   justify-content: center;
@@ -168,19 +177,26 @@ h1 {
   color: white;
 }
 
+.hero-credit-sub {
+  font-size: 0.75rem;
+  color: #ddd;
+  margin-top: 2px;
+}
+
 /* --- CONTENT LAYOUT --- */
 .container {
   max-width: 1000px;
   margin: 0 auto;
   padding: 80px 20px;
+  width: 100%; /* Pastikan kontainer patuh pada layar */
+  overflow: hidden; /* Mencegah anak elemen bocor */
 }
 
-/* --- ARTICLE STYLING --- */
 .article-body p {
   font-size: 1.15rem;
   margin-bottom: 30px;
   color: var(--text-main);
-  text-align: justify; /* Supaya rapi di HP */
+  text-align: justify;
 }
 
 .dropcap {
@@ -211,29 +227,23 @@ h2::after {
   background: #ddd;
 }
 
-/* --- QUOTE BOX KEREN --- */
 blockquote {
-  background: #f4f8f5; /* Latar belakang hijau sangat muda */
-  border-left: 5px solid var(--accent); /* Garis samping emas */
+  background: #f4f8f5;
+  border-left: 5px solid var(--accent);
   padding: 30px 40px;
   margin: 40px 0;
-
-  /* Font Keren (Handwriting Style) */
   font-family: "Dancing Script", cursive;
-  font-size: 1.6rem; /* Ukuran font lebih besar agar terbaca */
-  font-weight: 600; /* Sedikit tebal */
-  font-style: normal; /* Dancing script sudah miring alami */
+  font-size: 1.6rem;
+  font-weight: 600;
   line-height: 1.6;
-
-  color: var(--primary); /* Menggunakan warna hijau tua (Deep Forest) */
+  color: var(--primary);
   border-radius: 0 15px 15px 0;
   position: relative;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Bayangan halus */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
-/* Menambahkan tanda kutip besar di awal */
 blockquote::before {
-  content: "\201C"; /* Kode untuk tanda kutip buka */
+  content: "\201C";
   font-family: var(--font-display);
   font-size: 4rem;
   color: var(--accent);
@@ -243,9 +253,23 @@ blockquote::before {
   opacity: 0.3;
 }
 
-/* --- STATS CARDS (GACOR STYLE) --- */
+/* --- STATS SECTION --- */
 .research-highlight {
   margin: 50px 0;
+}
+
+.highlight-title {
+  font-family: var(--font-display);
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+.highlight-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 40px;
 }
 
 .stats-section {
@@ -262,10 +286,14 @@ blockquote::before {
   text-align: center;
   box-shadow: var(--shadow-soft);
   border: 1px solid rgba(0, 0, 0, 0.05);
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    box-shadow 0.4s ease;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
   position: relative;
   overflow: hidden;
+}
+
+.stat-card.alt-card {
+  border: 1px solid var(--accent);
+  background: #fffcf5;
 }
 
 .stat-card::before {
@@ -290,46 +318,162 @@ blockquote::before {
   transform: scaleX(1);
 }
 
+.stat-school {
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 5px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
 .stat-icon {
   font-size: 2rem;
   color: var(--accent);
   margin-bottom: 15px;
 }
+.stat-icon-alt {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
 
-.stat-value {
+.stat-value,
+.stat-value-alt {
   font-family: var(--font-display);
   font-size: 3.5rem;
   font-weight: 700;
-  color: var(--primary);
   line-height: 1;
   margin-bottom: 10px;
   display: block;
 }
+.stat-value {
+  color: var(--primary);
+}
+.stat-value-alt {
+  color: var(--accent);
+}
 
-.stat-label {
+.stat-arrow {
+  font-size: 1.5rem;
+  color: #999;
+  margin: 0 10px;
+}
+
+.stat-label,
+.stat-label-alt {
   font-size: 0.9rem;
-  color: var(--text-muted);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+.stat-label {
+  color: var(--text-muted);
+}
+.stat-label-alt {
+  color: var(--primary);
+}
 
-/* --- PDF VIEWER --- */
+.stat-note {
+  font-size: 0.8rem;
+  margin-top: 10px;
+  color: #999;
+}
+
+.analysis-box {
+  margin-top: 40px;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  width: 100%; /* Pastikan box tidak melebar */
+}
+
+.analysis-box h4 {
+  text-align: center;
+  font-family: var(--font-display);
+  color: var(--primary);
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+/* --- PDF SECTION --- */
 .pdf-section {
   background: #111;
   padding: 80px 20px;
   color: white;
   text-align: center;
+  width: 100%;
+}
+.pdf-section h2 {
+  color: white;
+  justify-content: center;
+  margin-top: 0;
+  border: none;
+}
+.pdf-desc {
+  opacity: 0.7;
+  margin-bottom: 50px;
 }
 
-.pdf-container {
+.pdf-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.pdf-card {
   width: 100%;
-  max-width: 1100px;
-  height: 85vh;
-  margin: 40px auto 0;
+  max-width: 500px;
+}
+.pdf-card h3 {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.pdf-frame {
+  width: 100%;
+  height: 500px;
   border: none;
   border-radius: 10px;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  background: #333;
+}
+
+.btn-wrapper {
+  margin-top: 20px;
+}
+
+.download-btn {
+  text-decoration: none;
+  padding: 10px 30px;
+  border-radius: 50px;
+  transition: 0.3s;
+  display: inline-block;
+  font-size: 0.9rem;
+}
+.accent-btn {
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.accent-btn:hover {
+  background: var(--accent);
+  color: #000;
+}
+.white-btn {
+  color: white;
+  border: 1px solid white;
+}
+.white-btn:hover {
+  background: white;
+  color: #000;
+}
+
+.pdf-footer-note {
+  font-size: 0.8rem;
+  margin-top: 40px;
+  color: #888;
 }
 
 /* --- FOOTER --- */
@@ -339,28 +483,26 @@ footer {
   padding: 60px 20px;
   text-align: center;
   font-size: 0.9rem;
+  width: 100%;
 }
-
 .footer-logo {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 1.4rem;
   color: white;
   margin-bottom: 10px;
   display: block;
 }
 
-/* --- ANIMATION CLASSES --- */
+/* --- ANIMATIONS --- */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s ease-out;
 }
-
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
 }
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -372,49 +514,143 @@ footer {
   }
 }
 
-@keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateX(-50%) translateY(0);
+/* =========================================
+   RESPONSIVE & MOBILE OPTIMIZATION
+   ========================================= */
+
+@media (max-width: 992px) {
+  h1 {
+    font-size: 3rem;
   }
-  40% {
-    transform: translateX(-50%) translateY(-10px);
+  .container {
+    padding: 60px 30px;
   }
-  60% {
-    transform: translateX(-50%) translateY(-5px);
+  .pdf-frame {
+    height: 400px;
   }
 }
 
-/* --- RESPONSIVE MEDIA QUERIES --- */
 @media (max-width: 768px) {
+  /* Fix Parallax iOS */
   .hero-bg {
     background-attachment: scroll;
-  } /* Disable parallax on mobile for smooth scroll */
+    background-position: center top;
+  }
+
+  /* Navbar */
+  nav {
+    padding: 15px 20px;
+  }
+  .brand {
+    font-size: 0.95rem;
+    max-width: 70%;
+  }
+  .nav-meta {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+  }
+
+  /* Hero */
+  header.hero {
+    min-height: 100vh;
+    padding-top: 100px;
+    padding-bottom: 40px;
+  }
   h1 {
     font-size: 2.2rem;
   }
   .hero-subtitle {
     font-size: 1rem;
   }
+
   .hero-credits {
     flex-direction: column;
     gap: 15px;
+    margin-top: 30px;
   }
-  .stat-value {
-    font-size: 2.8rem;
+  .hero-credit-box {
+    width: 100%;
   }
+
+  /* Content */
   .container {
     padding: 40px 20px;
   }
+
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-top: 40px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
+  h2::after {
+    width: 100%;
+  }
+
   .dropcap {
-    font-size: 4rem;
-    margin-right: 15px;
+    font-size: 3.5rem;
+    margin-right: 10px;
+  }
+
+  blockquote {
+    padding: 20px 20px 20px 30px;
+    font-size: 1.2rem;
+    margin: 30px 0;
+  }
+  blockquote::before {
+    font-size: 3rem;
+    left: 5px;
+  }
+
+  /* Stats Grid Fix */
+  .stats-section {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .stat-card {
+    padding: 30px 20px;
+  }
+  .stat-value {
+    font-size: 2.5rem;
+  }
+
+  /* PDF Mobile */
+  .pdf-section {
+    padding: 60px 15px;
+  }
+  .pdf-frame {
+    height: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  .brand {
+    font-size: 0.85rem;
+    letter-spacing: 0;
+  }
+
+  /* Hide PDF Preview on Small Phones */
+  .pdf-frame {
+    display: none;
+  }
+
+  .pdf-card h3::after {
+    content: " (Preview disembunyikan)";
+    font-size: 0.7rem;
+    font-weight: normal;
+    opacity: 0.7;
+    display: block;
+    margin-top: 5px;
+  }
+
+  .download-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 15px;
   }
 }
